@@ -1,0 +1,1 @@
+"./main_write.obj" "./printf-stdarg.obj" "./LT8920_dev/LT8920.obj" "./uart/uscia0_uart.obj" "../lnk_msp430g2553.cmd" -llibc.a 
