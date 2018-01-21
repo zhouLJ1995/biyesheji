@@ -28,6 +28,7 @@
 
 //#define channel 0x7f  //频道
 uint8_t RegH,RegL;
+uint8_t RSSI;
 
 //==============================================================================
 //函数：char SPI_ReadWriteByte(uchar)
@@ -102,13 +103,14 @@ int8_t LT8920_RX(uint8_t *const data)
 
 	if(LT8920_PKT)
 	{
+		__bic_SR_register(GIE);//关闭全局中断使能
 		LT8920_readreg(48);//查询crc是否正确
 		if((RegH&0x80)==0)
 		{
 			LT8920_readreg(50);          //FIFO数据读取入口
 			n=RegH;
 //			data[1]=RegL;
-			printf("%x\n",n);
+			printf("%d\n",n);
 
 			while( i<n )
 			{
@@ -116,7 +118,11 @@ int8_t LT8920_RX(uint8_t *const data)
 				data[++i]=RegH;
 				data[++i]=RegL;
 			}
+			printf("RSSI=%d\n",RSSI);
+			data[++i]=RSSI;
+			RSSI=0;
 		}
+		__bis_SR_register(GIE);//开启全局中断使能
 	}
 	return i;
 }
@@ -148,6 +154,13 @@ int8_t LT8920_TX(uint8_t oder, const uint8_t *temp)
 inline void LT8920_TXRX_exit(void)
 {
 	LT8920_writereg(7,0x00,0);	//停止接收发送 进入空闲状态
+}
+
+void LT8920_read_RSSI(void)
+{
+	LT8920_readreg(6);          //RSSI数据读取入口
+	if( (RegH>>2) > RSSI )
+		RSSI=RegH>>2;
 }
 
 void LT8920_init()

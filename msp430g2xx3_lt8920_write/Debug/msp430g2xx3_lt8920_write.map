@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v15.12.3                    
 ******************************************************************************
->> Linked Sun Jan 21 21:25:44 2018
+>> Linked Sun Jan 21 23:26:48 2018
 
 OUTPUT FILE NAME:   <msp430g2xx3_lt8920_write.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 0000c960
@@ -19,7 +19,7 @@ MEMORY CONFIGURATION
   INFOC                 00001040   00000040  00000000  00000040  RWIX
   INFOB                 00001080   00000040  00000000  00000040  RWIX
   INFOA                 000010c0   00000040  00000000  00000040  RWIX
-  FLASH                 0000c000   00003fde  00000a78  00003566  RWIX
+  FLASH                 0000c000   00003fde  00000a82  0000355c  RWIX
   BSLSIGNATURE          0000ffde   00000002  00000002  00000000  RWIX  ffff 
   INT00                 0000ffe0   00000002  00000002  00000000  RWIX
   INT01                 0000ffe2   00000002  00000000  00000002  RWIX
@@ -84,15 +84,15 @@ section   page    origin      length       input sections
 
 .binit     0    0000c000    00000000     
 
-.const     0    0000ca4c    00000022     
-                  0000ca4c    0000000e     main_write.obj (.const:.string)
-                  0000ca5a    0000000c     LT8920.obj (.const:.string)
-                  0000ca66    00000008     printf-stdarg.obj (.const:.string)
+.const     0    0000ca4c    0000002c     
+                  0000ca4c    00000016     LT8920.obj (.const:.string)
+                  0000ca62    0000000e     main_write.obj (.const:.string)
+                  0000ca70    00000008     printf-stdarg.obj (.const:.string)
 
-.cinit     0    0000ca6e    0000000a     
-                  0000ca6e    00000004     (.cinit..bss.load) [load image, compression = zero_init]
-                  0000ca72    00000002     (__TI_handler_table)
-                  0000ca74    00000004     (__TI_cinit_table)
+.cinit     0    0000ca78    0000000a     
+                  0000ca78    00000004     (.cinit..bss.load) [load image, compression = zero_init]
+                  0000ca7c    00000002     (__TI_handler_table)
+                  0000ca7e    00000004     (__TI_cinit_table)
 
 .init_array 
 *          0    0000c000    00000000     UNINITIALIZED
@@ -160,9 +160,9 @@ MODULE SUMMARY
        Total:               914    26        0      
                                                     
     .\LT8920_dev\
-       LT8920.obj           966    12        2      
+       LT8920.obj           966    22        2      
     +--+--------------------+------+---------+---------+
-       Total:               966    12        2      
+       Total:               966    22        2      
                                                     
     .\uart\
        uscia0_uart.obj      392    0         0      
@@ -200,18 +200,18 @@ MODULE SUMMARY
        Stack:               0      0         80     
        Linker Generated:    0      10        0      
     +--+--------------------+------+---------+---------+
-       Grand Total:         2636   72        82     
+       Grand Total:         2636   82        82     
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 0000ca74 records: 1, size/record: 4, table size: 4
-	.bss: load addr=0000ca6e, load size=00000004 bytes, run addr=00000200, run size=00000002 bytes, compression=zero_init
+__TI_cinit_table @ 0000ca7e records: 1, size/record: 4, table size: 4
+	.bss: load addr=0000ca78, load size=00000004 bytes, run addr=00000200, run size=00000002 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 0000ca72 records: 1, size/record: 2, table size: 2
+__TI_handler_table @ 0000ca7c records: 1, size/record: 2, table size: 2
 	index: 0, handler: __TI_zero_init
 
 
@@ -333,10 +333,10 @@ address   name
 00000050  __STACK_SIZE            
 UNDEFED   __TI_BINIT_Base         
 UNDEFED   __TI_BINIT_Limit        
-0000ca74  __TI_CINIT_Base         
-0000ca78  __TI_CINIT_Limit        
-0000ca72  __TI_Handler_Table_Base 
-0000ca74  __TI_Handler_Table_Limit
+0000ca7e  __TI_CINIT_Base         
+0000ca82  __TI_CINIT_Limit        
+0000ca7c  __TI_Handler_Table_Base 
+0000ca7e  __TI_Handler_Table_Limit
 UNDEFED   __TI_INITARRAY_Base     
 UNDEFED   __TI_INITARRAY_Limit    
 0000ca38  __TI_ISR_TRAP           
@@ -523,10 +523,10 @@ address   name
 0000ca40  abort                   
 0000ca46  _system_pre_init        
 0000ca4a  _system_post_cinit      
-0000ca72  __TI_Handler_Table_Base 
-0000ca74  __TI_CINIT_Base         
-0000ca74  __TI_Handler_Table_Limit
-0000ca78  __TI_CINIT_Limit        
+0000ca7c  __TI_Handler_Table_Base 
+0000ca7e  __TI_CINIT_Base         
+0000ca7e  __TI_Handler_Table_Limit
+0000ca82  __TI_CINIT_Limit        
 0000ffe0  __TI_int00              
 0000ffe4  __TI_int02              
 0000ffe6  __TI_int03              

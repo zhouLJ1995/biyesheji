@@ -46,6 +46,15 @@ int main(void)
 	DCOCTL |= CALDCO_16MHZ;     // Set DCO 需要在system.h中定义CPU_CLOCK
 	BCSCTL2 |= DIVM_0 + DIVS_0;//不分频
 
+//	//timer
+//	CCTL0 = CCIE;                             // CCR0 interrupt enabled
+//	CCR0 = 0x4fff;
+//	TACTL = TASSEL_2 + MC_1;                  //SMCLK, upmode
+
+	//LED
+	P1DIR |= 0x40;
+	P1OUT |= 0x40;
+
 	LT8920_init();    		//初始化LT8920
 
 	UART_Set(baud_115200,8,0,1,1);
@@ -54,7 +63,7 @@ int main(void)
 	LT8920_RXconf(0x7f);
 	while(1)
 	{
-//		__bis_SR_register(LPM3_bits);// LPM3_bits ,GIE是打开全局中断使能
+		LT8920_read_RSSI();
 		i=LT8920_RX(data);
 		if( i>0 )
 		{
@@ -87,4 +96,17 @@ __interrupt void Port2_ISR(void)
 		P2IFG &= ~BIT2;
 		__bic_SR_register_on_exit(LPM3_bits);
 	}
+}
+
+// Timer A0 interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=TIMER0_A0_VECTOR
+__interrupt void Timer_A (void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) Timer_A (void)
+#else
+#error Compiler not supported!
+#endif
+{
+
 }
