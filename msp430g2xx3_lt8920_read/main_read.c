@@ -1,15 +1,8 @@
 //******************************************************************************
-//   MSP430G2xx3 - USCI_A0, UART
-//
-//   Description: Echo a received character, RX ISR used. Normal mode is LPM0.
-//   USCI_A0 RX interrupt triggers TX Echo.
-//   baud: 1200 2400 4800 9600(默认)19200 38400 56000 115200
-//   ACLK = 32.768KHz, MCLK = SMCLK = CALxxx_16MHZ = 16MHz
-//
 //                MSP430G2xx3
 //             -----------------
 //         /|\|              XIN|-
-//          | |                 |32kHz
+//          | |                 |
 //          --|RST          XOUT|-
 //            |                 |
 //            |     P1.2/UCA0TXD|------------>
@@ -29,7 +22,10 @@
 #include "LT8920_dev/LT8920.h"
 #include "system.h"
 #include "uart/uscia0_uart.h"
+#include "moniUART/moni_UART.h"
 #include "printf-stdarg.h"
+
+#define DEBUG
 
 int main(void)
 {
@@ -50,15 +46,20 @@ int main(void)
 //	CCTL0 = CCIE;                             // CCR0 interrupt enabled
 //	CCR0 = 0x4fff;
 //	TACTL = TASSEL_2 + MC_1;                  //SMCLK, upmode
+#ifdef DEBUG
+	VirtualCOM_GPIOConfig();//初始化模拟UART 波特率115200 P2.3
+//	printf("周灵杰\n");//
+	printf("Author : zhouLJ\n");
+	printf("System start...\n");
+#endif
 
 	//LED
 	P1DIR |= 0x40;
 	P1OUT |= 0x40;
 
 	LT8920_init();    		//初始化LT8920
-
 	UART_Set(baud_115200,8,0,1,1);
-	printf("周灵杰\n");//
+
 	__bis_SR_register(GIE);//GIE是打开全局中断使能
 	LT8920_RXconf(0x7f);
 	while(1)

@@ -26,7 +26,7 @@
 //******************************************************************************************
 #ifdef CPU_CLOCK
 	#define Delay_us(us)    __delay_cycles(CPU_CLOCK/1000000u*(us))
-	#define Delay_ms(ms)   __delay_cycles( (ms) * CPU_CLOCK/1000u  )
+	#define Delay_ms(ms)   __delay_cycles( (ms) * CPU_CLOCK/1000u  )//只接受整型常量
  #else
 	#error "时钟MCLK的频率CPU_CLOCK没有定义!"
 #endif

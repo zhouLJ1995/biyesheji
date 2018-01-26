@@ -10,6 +10,6 @@ enum BAUD
 
 void UART_Set(uchar baud,uchar data,char jiouwei,uchar stop,uchar R_T);
 void UART_sent(uchar Chr) ;
-int putchar(int c);
+//int putchar(int c);//÷ÿ∂®“Âprintf
 
 #endif /* #ifndef __MSP430G2XX3_USCIA0_UART */

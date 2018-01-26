@@ -13,6 +13,7 @@ ORDERED_OBJS += \
 "./main_read.obj" \
 "./printf-stdarg.obj" \
 "./LT8920_dev/LT8920.obj" \
+"./moniUART/moni_UART.obj" \
 "./uart/uscia0_uart.obj" \
 "../lnk_msp430g2553.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -27,9 +28,11 @@ RMDIR := RMDIR /S/Q
 -include sources.mk
 -include subdir_vars.mk
 -include LT8920_dev/subdir_vars.mk
+-include moniUART/subdir_vars.mk
 -include uart/subdir_vars.mk
 -include subdir_rules.mk
 -include LT8920_dev/subdir_rules.mk
+-include moniUART/subdir_rules.mk
 -include uart/subdir_rules.mk
 -include objects.mk
 
@@ -159,8 +162,8 @@ msp430g2xx3_lt8920_read.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main_read.d" "printf-stdarg.d" "LT8920_dev\LT8920.d" "uart\uscia0_uart.d" 
-	-$(RM) "main_read.obj" "printf-stdarg.obj" "LT8920_dev\LT8920.obj" "uart\uscia0_uart.obj" 
+	-$(RM) "main_read.d" "printf-stdarg.d" "LT8920_dev\LT8920.d" "moniUART\moni_UART.d" "uart\uscia0_uart.d" 
+	-$(RM) "main_read.obj" "printf-stdarg.obj" "LT8920_dev\LT8920.obj" "moniUART\moni_UART.obj" "uart\uscia0_uart.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

@@ -9,6 +9,7 @@
 #define _LT8920_H_
 
 #include "../system.h"
+#include <msp430.h>
 
 //extern uint8_t RegH,RegL;
 //extern uint8_t RSSI;

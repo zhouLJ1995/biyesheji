@@ -5,7 +5,6 @@
  *      Author: zhouLJ
  */
 #include "LT8920.h"
-#include <msp430.h>
 
 #include "../printf-stdarg.h"
 

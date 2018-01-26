@@ -153,8 +153,8 @@ void UART_sent(uchar Chr)
 //	IFG2&=~UCA0TXIFG;
 }
 
-int putchar(int c)
-{
-	UART_sent((uchar)c);
-	return c;
-}
+//int putchar(int c)//÷ÿ∂®“Âprintf
+//{
+//	UART_sent((uchar)c);
+//	return c;
+//}

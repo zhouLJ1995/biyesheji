@@ -113,5 +113,6 @@ S64_DEPS__QUOTED :=
 SUBDIRS := \
 . \
 LT8920_dev \
+moniUART \
 uart \
 
