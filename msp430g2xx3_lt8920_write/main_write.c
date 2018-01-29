@@ -47,9 +47,9 @@ int main(void)
 	BCSCTL2 |= DIVM_0 + DIVS_0;//²»·ÖÆµ
 
 	//timer
-	CCTL0 = CCIE;                             // CCR0 interrupt enabled
-	CCR0 = 0xffff;
-	TACTL = TASSEL_1 + MC_1;                  //ACLK, upmode
+	TACCTL0 = CCIE;                             // CCR0 interrupt enabled
+	TACCR0 = 0xffff;
+	TA0CTL = TASSEL_1 + MC_1;                  //ACLK, upmode
 
 	//LED
 	P1DIR |= 0x40;

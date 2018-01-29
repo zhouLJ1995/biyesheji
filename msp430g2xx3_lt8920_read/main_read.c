@@ -11,7 +11,7 @@
 //
 //******************************************************************************
 /*
- * msp430g2xx3_uscia0_uart_main.c
+ * main_read.c
  *
  *  Created on: 2017年7月28日
  *      Author:  周灵杰
@@ -25,7 +25,6 @@
 #include "moniUART/moni_UART.h"
 #include "printf-stdarg.h"
 
-#define DEBUG
 
 int main(void)
 {
@@ -57,10 +56,13 @@ int main(void)
 	P1DIR |= 0x40;
 	P1OUT |= 0x40;
 
-	LT8920_init();    		//初始化LT8920
-	UART_Set(baud_115200,8,0,1,1);
-
 	__bis_SR_register(GIE);//GIE是打开全局中断使能
+
+	LT8920_init();    		//初始化LT8920
+	UART_Set(baud_115200,8,0,1,0);
+
+	SIM800_TCPSendData("zljzlj\x1a");
+
 	LT8920_RXconf(0x7f);
 	while(1)
 	{
@@ -73,20 +75,6 @@ int main(void)
 			printf("%s\n",data );
 		}
 	}
-}
-
-//  Echo back RXed character, confirm TX buffer is ready first
-#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector=USCIAB0RX_VECTOR
-__interrupt void USCI0RX_ISR(void)
-#elif defined(__GNUC__)
-void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
-#else
-#error "编译器不支持!"
-#endif
-{
-	while (!(IFG2&UCA0TXIFG));                 // USCI_A0 TX buffer ready?
-	UCA0TXBUF = UCA0RXBUF;                     // TX -> RXed character
 }
 
 #pragma vector =PORT2_VECTOR

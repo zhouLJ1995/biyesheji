@@ -113,6 +113,7 @@ S64_DEPS__QUOTED :=
 SUBDIRS := \
 . \
 LT8920_dev \
+SIM800 \
 moniUART \
 uart \
 

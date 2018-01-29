@@ -190,7 +190,7 @@ void LT8920_init()
 	LT8920_writereg(5, 0x66, 0x37);
 	LT8920_writereg(7, 0x00, 0x00);// use for setting 	RF frequency and to start or stop TX /RX packets
 	LT8920_writereg(8, 0x6C, 0x90);
-	LT8920_writereg(9, 0x18, 0x40);//set TX power level
+	LT8920_writereg(9, 0xFF, 0xC0);//set TX power level
 	LT8920_writereg(10, 0x7F, 0xFD);//crystal osc.enabled
 	LT8920_writereg(11, 0x00, 0x08);//rssi enabled
 	LT8920_writereg(12, 0x00, 0x00);

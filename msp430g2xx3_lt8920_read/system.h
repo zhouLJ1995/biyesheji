@@ -14,6 +14,8 @@
 	#define CPU_CLOCK 16000000
 #endif
 
+#define DEBUG
+
 #ifndef uchar
 #define uchar unsigned char
 #endif

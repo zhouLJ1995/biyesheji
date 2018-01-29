@@ -1,6 +1,9 @@
-#include <msp430g2553.h>
+#include <msp430.h>
 
 #include "uscia0_uart.h"
+
+char UARTdata[70];
+uint8_t UARTnum;
 
 /*****************************************************************
 *名称：UART_Set()
@@ -151,6 +154,49 @@ void UART_sent(uchar Chr)
 	while (!(IFG2&UCA0TXIFG));// USCI_A0 TX buffer ready 判断上次数据是否发完
 	UCA0TXBUF=Chr;
 //	IFG2&=~UCA0TXIFG;
+}
+
+void UART_StringSend(char *str)//发送字符串
+{
+	while(*str)
+	{
+		UART_sent(*str++);
+	}
+}
+
+void UART_StringRead(char *str)//接收字符串
+{
+	uint32_t i=0x1fffff;
+	while( i--)
+	{
+		if( IFG2&UCA0RXIFG )                 // USCI_A0 RX buffer ready?
+		{
+			*str = UCA0RXBUF;                     // TX -> RXed character
+			if( *str=='\r' )
+				i=0x00;
+			else
+				i=0x1fffff;
+		Delay_us(5);
+		str++;
+		}
+	}
+	*(str-1)='\0';
+}
+
+//  Echo back RXed character, confirm TX buffer is ready first
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=USCIAB0RX_VECTOR
+__interrupt void USCI0RX_ISR(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
+#else
+#error "编译器不支持!"
+#endif
+{
+	if(UARTnum!=70)
+		UARTdata[UARTnum++] = UCA0RXBUF;                     // TX -> RXed character
+	else
+		IFG2 &= ~UCA0RXIFG;//清除中断标志
 }
 
 //int putchar(int c)//重定义printf
